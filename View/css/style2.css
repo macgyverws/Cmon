@@ -1,0 +1,34 @@
+
+.container, .container-fluid {
+	padding-right: 0px;
+	padding-left: 0px;
+	background-color: #B7E4F9;
+}
+
+.row {
+ 	margin-bottom: 50px;
+}
+
+[class*="col-"], header, footer {
+	padding-top: 0px;
+	padding-bottom: 0px;
+	background-color: #FFFFFF;
+	text-align: left;
+}
+
+div[role="main"], div[role="complementary"] {
+	height: 400px;
+}
+
+div[role="complementary"] {
+	top: 40%
+}
+
+div[role="main"]{
+	background-color: #B7E4F9;
+	text-align: center;
+}
+
+#botao {
+	margin-top: 10px;
+}
