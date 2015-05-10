@@ -1,73 +1,54 @@
 <?php
 
    /**
-   * Classe Usuario - representa a entidado usuario no sistema
+   * A classe usuário apresenta os atributos e métodos responsáveis pela manipulação do usuário.
    */
-    class Usuario{ 
-	
-	private $nome;
-        private $email; 
-        private $urlFoto;
-	private $localizacao;
-	private $idade;
-	private $esporteFavorito;
-	
-	/*
-	o metodo a seguir é o cosntrutor da classe usuario que 
-	tem como parametros o nome,endereço da foto do perfil, localizacao, idade
-	esporte favorito e email de um usuario
-	*/
-	
-        public function __construct($nome,$urlFoto,$localizacao,$idade,$esporteFavorito,$email){
-		
-	$this->nome = $nome;
-        $this->urlFoto = $urlFoto;
-        $this->localizacao = $localizacao;
-	$this->idade = $idade;
-        $this->esporteFavorito = $esporteFavorito;
-        $this->email= $email;	
-        }
-	
-	public function setEsporteFavorito($esporteFavorito) //setter
-        {
-        $this->esporteFavorito = $esporteFavorito;
-        }
-	
-	###########Getters da classe usuario##############
-	
-	
-	//retorna o nome do usuario
-	public function getNome() 
-        {
-        return $this->nome;
-        } 
-	//retorna o email do usuario
-	public function getEmail() 
-        {
-         return $this->email;
-        } 
-	//retorna a url da foto do usuario
-	public function getUrlFoto() 
-        {
-        return $this->urlFoto;
-        } 
-	//retorna a localizacao do usuario
-	public function getLocalizacao() 
-        {
-         return $this->localizacao;
-        } 
-	//retorna a idade do usuario
-	public function getIdade() 
-        {
-        return $this->idade;
-        } 
-	//retorna o esporte favorito do usuario
-	public function getEsporteFavorito() 
-        {
-        return $this->esporteFavorito;
-        } 
-	 
-	
-	}
+  public class Usuario{ 
+    private $nome;
+    private $ID; 
+    private $urlFoto;
+    private $cidade;
+    private $idade;
+    private $esporteFavorito;
+  
+  /*
+  * Construtor da classe usuário.
+  */
+  
+   public function __construct($nome, $urlFoto, $cidade, $idade, $esporteFavorito, $ID){
+      $this->nome = $nome;
+      $this->urlFoto = $urlFoto;
+      $this->cidade = $cidade;
+      $this->idade = $idade;
+      $this->esporteFavorito = $esporteFavorito;
+      $this->ID= $ID; 
+    }
+  
+    public function setEsporteFavorito($esporteFavorito){
+      $this->esporteFavorito = $esporteFavorito;
+    }
+    public function getNome(){
+      return $this->nome;
+    } 
+    public function getID(){
+      return $this->ID;
+    } 
+    public function getUrlFoto(){
+      return $this->urlFoto;
+    } 
+    public function getCidade(){
+      return $this->cidade;
+    } 
+    public function getIdade(){
+      return $this->idade;
+    } 
+    public function getEsporteFavorito(){
+      return $this->esporteFavorito;
+    } 
+   
+  }
 
 ?>
+
+
+
