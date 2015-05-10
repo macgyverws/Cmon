@@ -3,160 +3,197 @@ require_once "Convite.php";
 
 
        /**
-       * Classe evento - Evento representa a entidade evento do sistema
+       * A classe evento contém atributos e métodos responsáveis pela manipulação dos eventos esportivos.
        */
-       class Evento{ 
-	
-	private $id;
-        private $URL;
-        private $nome;
-	private $local ;
-        private $data;
-	private $horaInicio ;
-        private $horaTermino ;
-	private $minimoParticipantes;
-	private $foiLembrado;
-	private $autoCancelamento;
-	private $criador;
-	private $convitesPendentes = array();
-	private $convitesconfirmados = array();
-	private $observacoes;
-	/**
-         * contrutor da classe evento
-         */
-	
-	public function __construct($nome,$local,$data){
-	
-	$this->nome = $nome;
+    public class Evento{ 
+    
+      // Número de identificação do evento esportivo.
+      private $id;
+
+      // Url da imagem de apresentação do evento.
+      private $URLImagem;
+
+      // Nome do evento.
+      private $nome;
+
+      // Local onde será realizado o evento
+      private $local ;
+
+      // Data de realização do evento.
+      private $data;
+
+      // Momento em que se inicia o evento.
+      private $horaInicio ;
+
+      // Momento em que se finaliza o evento.
+      private $horaTermino ;
+
+      // Número mínimo de participantes para que o evento possa ser realizado.
+      private $minimoParticipantes;
+
+      // Informa se o acontecimento do evento já foi lembrado aos convidados
+      private $foiLembrado = false;
+
+      // Auto cancela o evento caso esteja há um dia deste acontecer e não possua o número mínimo de convidados confirmados
+      private $autoCancelamento;
+
+      // Armazena os dados do criador do evento.
+      private $criador;
+
+      // Lista de convites que ainda estão pendentes.
+      private $convitesPendentes = array();
+
+      // Lista de convites que já foram confirmados.
+      private $convitesconfirmados = array();
+
+      // Observações sobre o evento.
+      private $observacoes;
+        
+        /**
+         * Construtor da classe evento.
+         */  
+      public function __construct($nome,$local,$data,$horaInicio,$horaTermino,$minimoParticipantes,$autoCancelamento,$criador,$convitesPendentes,$observacoes,$URLImagem){
+        $this->nome = $nome;
         $this->local = $local;
         $this->data = $data;
-	
-	}
-	public function __getid( ) {
-		return $this->$id; 
-	} 
-	public function __getURL( ) {
-		return $this->$URL; 
-	} 
-	public function __getNome( ) {
-		return $this->$nome; 
-	}
-	public function __geLocal( ) { 
-	    return $this->$local; 
-	}
-	public function __getData( ) { 
-	    return $this->$data; 
-	}
-	public function __getHoraInicio( ) { 
-	    return $this->$horaInicio; 
-	}
-	public function __getHoraTermino( ) { 
-	    return $this->$horaTermino; 
-	}
-	public function __getMinimoParticipantes( ) { 
-	    return $this->$minimoParticipantes; 
-	}
-	public function __getFoiLembrado( ) { 
-	    return $this->$foiLembrado; 
-	}
-	public function __getAutoCancelamento( ) { 
-	    return $this->$autoCancelamento; 
-	}
-	public function __getCriador ()  { 
-	    return $this->$autoCancelamento; 
-	}
-	
-	public function __getConviterPendentes( ) { 
-	    return $this->$convitesPendentes; 
-	}
-	public function __getConviterConfirmados( ) { 
-	    return $this->$convitesPendentes; 
-	}
-	
-	
-	
-	
-	public function __setConvitesPendentes( $convitesPendentes) { 
-	   $this->$convitesPendentes = $convitesPendentes;
-	}
-	
-	public function __setConvitesConfirmados($convitesConfirmados ) { 
-	   $this->$convitesConfirmados=$convitesConfirmados; 
-	}
-	public function __setId($id ) { 
-	     $this->$id= $id; 
-	}
-	public function __setObsevacoes($observacoes ) { 
-	     $this->$observacoes= $observacoes; 
-	}
-	
-	public function __setURLImagem($url) { 
-	     $this->$url= $url; 
-	}
-	public function __setHoraInicio($horaInicio ) { 
-	     $this->$horaInicio= $horaInicio ; 
-	}
-	public function __setHoraTermino($horaTermino ) { 
-	     $this->$horaTermino= $horaTermino ; 
-	}
-	public function __setMinimoParticipantes($minimoParticipantes ) { 
-	     $this->$minimoParticipantes= $minimoParticipantes ; 
-	}
+        $this->horaInicio = $horaInicio;
+        $this->horaTermino = $horaTermino;
+        $this->minimoParticipantes = $minimoParticipantes;
+        $this->autoCancelamento = $autoCancelamento;
+        $this->criador = $criador;
+        $this->convitesPendentes = $convitesPendentes;
+        $this->observacoes = $observacoes;
+        $this->URLImagem = $URLImagem;
+      }
 
-         /*
-          cada convite deve ter uma chave para não chocar con convites já existentes
-          principalmente na hora de remover um convite
-         */
- 
-         public function addConviteConfirmado($convite, $key ) {
-            /* metodo isset verifica se já existe algum convite ocupando 
-	     aquele local no indice do array*/
-            if (isset($this->$convitesconfirmados[$key])) {
-                throw new ChaveEventoExistenteException("Convite já existente");
-            }
-            else {
-                $this->$convitesconfirmados[$key] = $convite;
-            }
-        }
-    
-         /*
-         metodo que deleta um iten do array de convites pendentes de acordo com a chave deste
+	  public function getid( ) {
+	    return $this->$id; 
+	  } 
+	  public function getURL( ) {
+	    return $this->$URL; 
+	  } 
+	  public function getNome( ) {
+	    return $this->$nome; 
+	  }
+	  public function getLocal( ) { 
+	      return $this->$local; 
+	  }
+	  public function getData( ) { 
+	      return $this->$data; 
+	  }
+	  public function getHoraInicio( ) { 
+	      return $this->$horaInicio; 
+	  }
+	  public function getHoraTermino( ) { 
+	      return $this->$horaTermino; 
+	  }
+	  public function getMinimoParticipantes( ) { 
+	      return $this->$minimoParticipantes; 
+	  }
+	  public function getFoiLembrado( ) { 
+	      return $this->$foiLembrado; 
+	  }
+	  public function getAutoCancelamento( ) { 
+	      return $this->$autoCancelamento; 
+	  }
+	  public function getCriador ()  { 
+	      return $this->$autoCancelamento; 
+	  }
+	  public function getConviterPendentes( ) { 
+	      return $this->$convitesPendentes; 
+	  }
+	  public function getConviterConfirmados( ) { 
+	      return $this->$convitesPendentes; 
+	  }
+
+  
+	  public function setObsevacoes($observacoes ) { 
+	       $this->$observacoes= $observacoes; 
+	  }
+	  public function setURLImagem($url) { 
+	       $this->$url= $url; 
+	  }
+	  public function setHoraInicio($horaInicio ) { 
+	       $this->$horaInicio= $horaInicio ; 
+	  }
+	  public function setHoraTermino($horaTermino ) { 
+	       $this->$horaTermino= $horaTermino ; 
+	  }
+	  public function setMinimoParticipantes($minimoParticipantes ) { 
+	       $this->$minimoParticipantes= $minimoParticipantes ; 
+	  }
+
+       /**
+       * O método abaixo serve para confirmar a presença de um usuário no evento.
+       */
+       public function confirmarPresenca($idConvidado) {
+      	$max=sizeof($convitesPendentes);
+           for($i=0;$i<$max;$i++){
+              if($convitesPendentes[$i].getIDConvidado()==$idConvidado){
+              		$convitesPendentes[$i].confirmarParticipacao();
+              		$convite=convitesPendentes[$i];
+              		array_splice($convitesPendentes, $convite);//deleta convite
+            		array_push($convitesConfirmados, $convite);//insereconvite
+        			return; 
+			  }
+      	   }
+		throw new dadoNaoEncontradoException(“Não foi possível confirmar presença neste evento, usuário não encontrado na lista de pendentes”);
+         }
          
-          */
-        public function deletarConvitePendente($key) {
-        if (isset($this->convitesPendentes[$key])) {
-            unset($this->convitesPendentes[$key]);
-			
-        }
-        else {
-            throw new chaveInvalidaException("A chave $key é inválida.");
-        }
-        }
-	/*
-	getter para um convite do array de convites pendentes de acordo com a chave deste
-	*/
-	 public function getConvitePendentes($key) {
-        if (isset($this->convitesPendentes[$key])) {
-            return $this->convitesPendentes[$key];
-        }
-        else {
-            throw new ChaveInvalidaException("A chave $key é inválida.");
-        }
-    }
-	
-	public function getConviteConfirmado($key) {
-        if (isset($this->convitesConfirmados[$key])) {
-            return $this->convitesConfirmados[$key];
-        }
-        else {
-            throw new ChaveInvalidaException("A chave $key é inválida.");
-        }
-    }
-	
-	
-	}
-     
-	 
+        /*
+        * O método abaixo serve para cancelar a presença de um usuário no evento.
+        */
+       public function cancelarPresenca($idConvidado, $confirmado) {  //deletar também na lista de convites do controller, para excluir do bd
+    	if(!$confirmado){
+ 			$max=sizeof($convitesPendentes);
+			for($i=0;$i<$max;$i++){
+   				 if($convitesPendentes[$i].getIDConvidado()==$idConvidado){
+    				$convitesPendentes[$i].cancelarParticipacao();
+    				$convite=$convitesPendentes[$i];
+    				array_splice($convitesPendentes, $convite);
+    				return ;
+				 }
+  			}
+ 	   }
+  
+  		else{
+    	   $max=sizeof($convitesConfirmados);
+           for($i=0;$i<$max;$i++){
+              if($convitesConfirmados[$i].getIDConvidado()==$idConvidado){
+      			 $convitesConfirmados[$i].cancelarParticipacao();
+     			 $convite=$convitesConfirmados[$i];
+     			 array_splice($convitesConfirmados, $convite);
+      			 return ;
+				}
+          }
+		}
+		throw new dadoNaoEncontradoException(“Não foi possível localizar o usuário”);
+     }
 
+    /**
+    * O método abaixo serve para listar os convidados confirmados ou pendentes de um evento.
+    */
+      public function listarConvidados($confirmados) {//true = confirmados false =pendentes’-’
+  	   $convites;
+  	   if($confirmados)
+       		$convites = $convitesConfirmados;
+ 	   else
+       		$convites = $convitesPendentes;
 
+       $max=sizeof($convites);
+	   if($max==0){
+			throw new dadoNaoEncontradoException("Não há convidados pedentes para este evento");
+       }
+       else{
+     		$listaConvidados=array();
+        	for($i=0;$i<$max;$i++){
+            	array_push($listaConvidados,$convites[$i].getIDConvidado());
+         	}         
+       		return $listaConvidados;
+      }
+ 	}
+
+}
 ?>
+
+
