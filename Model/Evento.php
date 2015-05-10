@@ -2,18 +2,18 @@
 require_once "Convite.php";
 
 
-   /**
-   * Classe Publica - Evento
-   */
-    class Evento{ 
+       /**
+       * Classe evento - Evento representa a entidade evento do sistema
+       */
+       class Evento{ 
 	
 	private $id;
-    private $URL;
-    private $nome;
+        private $URL;
+        private $nome;
 	private $local ;
-    private $data;
+        private $data;
 	private $horaInicio ;
-    private $horaTermino ;
+        private $horaTermino ;
 	private $minimoParticipantes;
 	private $foiLembrado;
 	private $autoCancelamento;
@@ -21,13 +21,15 @@ require_once "Convite.php";
 	private $convitesPendentes = array();
 	private $convitesconfirmados = array();
 	private $observacoes;
-	
+	/**
+         * contrutor da classe evento
+         */
 	
 	public function __construct($nome,$local,$data){
 	
 	$this->nome = $nome;
-    $this->local = $local;
-    $this->data = $data;
+        $this->local = $local;
+        $this->data = $data;
 	
 	}
 	public function __getid( ) {
@@ -101,14 +103,14 @@ require_once "Convite.php";
 	     $this->$minimoParticipantes= $minimoParticipantes ; 
 	}
 
-   /*
-   cada convite deve ter uma chave para não chocar con convites já existentes
-   e principalmente na hora de remover um convite
-   */
+         /*
+          cada convite deve ter uma chave para não chocar con convites já existentes
+          principalmente na hora de remover um convite
+         */
  
-    public function addConviteConfirmado($convite, $key ) {
-            // metodo isset verifica se já existe algum convite ocupando 
-			// aquele local no indice do array
+         public function addConviteConfirmado($convite, $key ) {
+            /* metodo isset verifica se já existe algum convite ocupando 
+	     aquele local no indice do array*/
             if (isset($this->$convitesconfirmados[$key])) {
                 throw new ChaveEventoExistenteException("Convite já existente");
             }
@@ -117,10 +119,11 @@ require_once "Convite.php";
             }
         }
     
-   /*
-   deleta um iten do array de acordo com a chave deste
-   */
-    public function deletarConvitePendente($key) {
+         /*
+         metodo que deleta um iten do array de convites pendentes de acordo com a chave deste
+         
+          */
+        public function deletarConvitePendente($key) {
         if (isset($this->convitesPendentes[$key])) {
             unset($this->convitesPendentes[$key]);
 			
@@ -128,8 +131,10 @@ require_once "Convite.php";
         else {
             throw new chaveInvalidaException("A chave $key é inválida.");
         }
-    }
-	
+        }
+	/*
+	getter para um convite do array de convites pendentes de acordo com a chave deste
+	*/
 	 public function getConvitePendentes($key) {
         if (isset($this->convitesPendentes[$key])) {
             return $this->convitesPendentes[$key];
