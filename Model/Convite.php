@@ -1,63 +1,50 @@
 <?php
-require_once "Evento.php";
-require_once "Usuario.php";
-     /*
-     classe convite representa a entidade convite do sistema
-  
-    */
+    require_once "Evento.php";
+    require_once "Usuario.php";
+     /**
+     * A classe convite apresenta os atributos e métodos responsáveis pela manipulação dos convites para os eventos.
+     */
 
-    class Convite{ 
-    
-     private $convidado;
-     private $evento;
+    public class Convite{ 
+     private $IDconvidado;
+     private $IDevento;
      private $confirmado =  false;
-	
-      /*
-      construtor da classe Convite 
-      recebendo um usuario e um evento como parametros
+  
+      /**
+      * Construtor da classe convite.
       */
-      public function __construct($usuario,$evento){
-	  	
-     $this->convidado = $usuario; 
-     this->evento = $evento;
+      public function __construct($IDconvidado, $IDevento){
+        $this->IDconvidado = $IDconvidado; 
+        $this->IDevento = $IDevento; //tava sem o cifrão
      }
-	
-     public function confirmarParticipacao() 
-     {
-     /*quando o usuario confirmar participacao no convite
-     esse convite é deletado dos pendentes e adicionado nos confirmados*/
-     $evento->deletarConvitePendente($chave);
-     $evento->adicionaConviteConfirmado($evento,$chave);
+     /**
+     *Método responsável por confirmar a participação de um usuário no evento.
+     */
+      public function confirmarParticipacao(){  
+        $confirmado = true;
      }
      
-     /*função que cancela  participacao de um convidado num convite
-     deletando um convite da lista de convites pendetes de um evento*/
-     public function cancelarParticipacao() 
-     {
-       $evento->deletarConvitePendente($chave); 
+     /**
+     *Método responsável por cancelar a participação de um usuário no evento.
+     */
+     public function cancelarParticipacao(){
+        $confirmado = false;
      }
+
+    public function getConfirmado(){
+      return $this->$confirmado;
+    }
+  
+    public function getIDEvento(){
+        return $this->$IDevento;
+    }
     
-    #############Getters da classe####################
-	
-	
-    //retorna o atributo "confirmado"
-    public function getComfirmado() 
-    {
-    return $this->$confirmado;
+    public function getIDConvidado(){
+        return $this->$IDconvidado;
     }
-    // retorna o atributo "evento"
-    public function getEvento() 
-    {
-      return $this->$evento;
+  
     }
-    //retorna o atributo Convidado
-    public function getConvidado() 
-    {
-      return $this->$convidado;
-    }
-	
-    }
-
-
-
 ?>
+
+
+
