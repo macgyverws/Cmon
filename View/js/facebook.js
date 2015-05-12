@@ -91,8 +91,8 @@
 					dados = [id, nome, cidade, idade, urlFoto, listaIDAmigos];
 
 		   			document.cookie = " nome = "+dados+" ";
-
-		   			location.href = "agenda.php";		   	 
-		   	     });
+	
+					location.href = "agenda.php?size="+listaIDAmigos.length+"";
+			    });
 		    });
 		}
