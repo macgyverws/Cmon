@@ -137,7 +137,7 @@ require_once "Convite.php";
         			return; 
 			  }
       	   }
-		throw new dadoNaoEncontradoException(“Não foi possível confirmar presença neste evento, usuário não encontrado na lista de pendentes”);
+		throw new DadoNaoEncontradoException(“Não foi possível confirmar presença neste evento, usuário não encontrado na lista de pendentes”);
          }
          
         /*
@@ -192,6 +192,10 @@ require_once "Convite.php";
        		return $listaConvidados;
       }
  	}
+
+  public function adcionarConvidados($listaConvidados){
+    array_push($convitesPendentes,$listaConvidados);   
+  }
 
 }
 ?>
