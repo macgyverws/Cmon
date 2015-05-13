@@ -1,0 +1,61 @@
+.container, .container-fluid {
+	background-color: #fff;
+}
+
+.row {
+}
+
+[class*="col-"], header, footer, div[role="main"] {
+	background-color: #ffffff;
+	text-align: left;
+}
+
+div[role="complementary1"], div[role="complementary2"], div[role="complementary3"] {
+	background-color: #ffffff;
+}
+
+div[role="main1"], div[role="complementary1"] {
+	height: 200px;
+	margin-top: 40px;
+}
+
+div[role="main2"], div[role="complementary2"] {
+	height: 100px;
+	text-align: center;
+}
+
+div[role="main3"], div[role="complementary3"] {
+	height: 700px;
+}
+
+#borda{
+	border: 1px solid #000;
+	background-color: #fff;
+	width: 750px;
+	height: 500px; 
+	margin-top: 10px;
+}
+
+#borda2 {
+	border: 1px solid #000;
+	background-color: #fff;
+	width: 350px;
+	height: 500px; 
+	margin-top: 50px;
+}
+
+.featurette-image.pull-left {
+  	margin-right: 20px;
+	width: 110px;
+	height: 190px;
+}
+
+.featurette-image.pull-right {
+	margin-right: 15px;
+	height: 180px;
+	width: 265px;
+}
+
+.btn.btn-default{
+	margin-top: 10px;
+}

@@ -88,7 +88,11 @@
 		   			for(i = 0; i < response.data.length; i++)
 		   				listaIDAmigos[i] = response.data[i].id;
 
-		   			alert("ID: "+id+"\nNome: "+nome+"\nCidade: "+cidade+"\nIdade: "+idade+"\nUrl Foto: "+urlFoto+"\nID's dos amigos: "+listaIDAmigos);
-		   	 	});
+					dados = [id, nome, cidade, idade, urlFoto, listaIDAmigos];
+
+		   			document.cookie = " nome = "+dados+" ";
+	
+					location.href = "agenda.php?size="+listaIDAmigos.length+"";
+			    });
 		    });
 		}
