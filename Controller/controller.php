@@ -1,14 +1,19 @@
 <?php
+	
+	include('/Model/Convite.php');
+	include('/Model/Evento.php');
+	include('/Model/Usuario.php');
+	include('/Model/conviteDAO.php');
+	include('/Model/eventoDAO.php');
+	include('/Model/usuarioDAO.php');
+	include('/Model/conexao.php');
+	
 	public class Controller extends Exception{ 
-   		
-		include('/Model/Convite.php');
-		include('/Model/Evento.php');
-		include('/Model/Usuario.php');
-		include('/Model/conviteDAO.php');
 
    		private $eventosCriados=array();
    		private $eventosConfirmados=array();
    		private $eventosPendentes=array();
+   		private $amigos=array();
 
 		private function buscarEventosConfirmadosDeUmUsuario($usuario){
 			$eventosDoUsuario=ConviteDAO->buscarConvites($usuario->getID());
