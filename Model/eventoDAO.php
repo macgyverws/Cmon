@@ -7,8 +7,8 @@
 	public class EventoDAO{ //Classe de Acesso a Dados referentes ao Evento
 
 		//Cadastrar evento no Banco de Dados.
-		public function inserirEvento ($nome, $local, $data, $horainicio, $horatermino, $minimoparticipantes, $autocancelamento, $urlimagem, $idCriador, $observacoes, $lembrete){
-			$cadastro = mysql_query ("INSERT INTO evento (`nome`, `local`, `data`, `horainicio`, `horatermino`, `minimoparticipantes`, `autocancelamento`, `urlimagem`, `idCriador`, `observacoes`, `lembrete`) VALUES ('$nome', '$local', '$data', '$horainicio', '$horatermino', '$minimoparticipantes', '$autocancelamento', '$urlimagem', '$idCriador', '$observacoes', '$lembrete')"); //Insere um evento na tabela.
+		public function inserirEvento ($nome, $local, $data, $horainicio, $horatermino, $minimoparticipantes, $autocancelamento, $urlimagem, $idCriador, $observacoes){
+			$cadastro = mysql_query ("INSERT INTO evento (`nome`, `local`, `data`, `horainicio`, `horatermino`, `minimoparticipantes`, `autocancelamento`, `urlimagem`, `idCriador`, `observacoes`, `lembrete`) VALUES ('$nome', '$local', '$data', '$horainicio', '$horatermino', '$minimoparticipantes', '$autocancelamento', '$urlimagem', '$idCriador', '$observacoes', 0)"); //Insere um evento na tabela.
 			if(!$cadastro){ //Caso o cadastro do evento não seja efetuado por algum motivo, a função retorna "false".
 				return false;
 			}
