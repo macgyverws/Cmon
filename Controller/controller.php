@@ -14,171 +14,168 @@
    		private $eventosConfirmados=array();
    		private $eventosPendentes=array();
    		private $amigos=array();
+		private $convitesDAO=ConviteDAO();	
+   		private $eventosDAO=EventoDAO();	
+   		private $usuariosDAO=UsuarioDAO();	
 
-		private function buscarEventosConfirmadosDeUmUsuario($usuario){
-			$eventosDoUsuario=ConviteDAO->buscarConvites($usuario->getID());
-			$eventosConfirmados=array();
+
+		private function carregarConvites($IDUsuario){
+			$eventosDoUsuario=$conviteDAO->buscarConvites($IDUsuario);
 			$quantidadeDeEventos = sizeof($eventosDoUsuario);
+			$eventosConfirmadosTemp()=array();
+			$eventosPendentesTemp()=array();
+			$eventosCriadosTemp()=array();
 			for($i = 0; $i < $quantidadeDeEventos; $i++){
-    			if($eventosDoUsuario[$i]->getConfirmado()==true){
-					array_push($eventosConfirmados,$eventosDoUsuario[$i])
+    			if($eventosDoUsuario[$i]->getConfirmado()==true){//se o usuario estiver confirmado no evento
+					array_push($eventosConfirmadosTemp,$eventosDoUsuario[$i])
+					if($eventosDoUsuario[$i]->getCriador()->getID()==$IDUsuario){//se o usuário for o dono do evento
+						array_push($eventosCriadosTemp,$eventosDoUsuario[$i]);
+					}
+				}
+				else{//se não estiver confirmado
+					array_push($eventosPendentesTempo,$eventosDoUsuario[$i])
 				}
 			}
-			return $eventosConfirmados;
+			$eventosCriados=$eventosCriadosTemp();//sobrescreve a lista de eventos criados
+			$eventosPendentes=$eventosPendentesTemp();//sobrescreve a lista de eventos pendentes
+			$eventosConfirmados=$eventosConfirmadosTemp();//sobrescreve a lista de eventos confirmados
 		}
 
-		private function buscarEventosPendentesDeUmUsuario($usuario){
-			$eventosDoUsuario=ConviteDAO->buscarConvites($usuario->getID());
-			$eventosConfirmados=array();
-			$quantidadeDeEventos = sizeof($eventosDoUsuario);
-			for($i = 0; $i < $quantidadeDeEventos; $i++){
-    			if($eventosDoUsuario[$i]->getConfirmado()==false){
-					array_push($eventosConfirmados,$eventosDoUsuario[$i])
-				}
+		private function listarEventos($valor){
+			$eventos=array();
+			if($valor==0){//eventos Criados
+				$quantidadeDeEventos = sizeof($eventosCriados);
+					for($i = 0; $i < $quantidadeDeEventos; $i++){
+						$eventoAtual=$eventoDAO->buscarEvento($eventosCriados[$i]->getIDevento());//busca o evento através do seu ID contido dentro de um convite
+						array_push($eventos,$eventoAtual);
 			}
-			return $eventosConfirmados;
-		}
-
-		private function buscarEventosCriadosPorUmUsuario($usuario){
-			$eventosDoUsuario=ConviteDAO->buscarConvites($usuario->getID());
-			$eventosConfirmados=array();
-			$quantidadeDeEventos = sizeof($eventosDoUsuario);
-			for($i = 0; $i < $quantidadeDeEventos; $i++){
-		    	if(strcmp($eventosDoUsuario[$i]->getCriador(), $usuario)==0){
-					array_push($eventosConfirmados,$eventosDoUsuario[$i])
-				}
+			if($valor==1){//eventos Confirmados
+				$quantidadeDeEventos = sizeof($eventosConfirmados);
+					for($i = 0; $i < $quantidadeDeEventos; $i++){
+						$eventoAtual=$eventoDAO->buscarEvento($eventosConfirmados[$i]->getIDevento());//busca o evento através do seu ID contido dentro de um convite
+						array_push($eventos,$eventoAtual);
 			}
-			return $eventosConfirmados;
+			if($valor==2){//eventos Pendentes
+				$quantidadeDeEventos = sizeof($eventosPendentes);
+					for($i = 0; $i < $quantidadeDeEventos; $i++){
+						$eventoAtual=$eventoDAO->buscarEvento($eventosPendentes[$i]->getIDevento());//busca o evento através do seu ID contido dentro de um convite
+						array_push($eventos,$eventoAtual);
+			}
+			return $eventos;
+
 		}
 
-		private function verificarDisponibilidade($usuario,$data,$horaInicio,$horaTermino){
-			$eventosDoUsuario=buscarEventosConfirmadosDeUmUsuario($usuario);
-			//array_push($eventosDoUsuario,)
-			$quantidadeDeEventos = sizeof($eventosDoUsuario);
+		private function verificarDisponibilidade($IDUsuario,$data,$horaInicio,$horaTermino){
+			carregarConvites($IDUsuario);
+			$eventos=buscarEvento(1);//cria uma lista de eventos criados
+			$quantidadeDeEventos = sizeof($eventos);//verifica o tamanho da lista dos eventos criados
 			for($i = 0; $i < $quantidadeDeEventos; $i++){
-				$eventoAtual=$eventosDoUsuario[$i]->getEvento()
 				if($eventoAtual->getData()==$data){
-					if(($eventoAtual->getHoraInicio()<=$horaInicio && $eventoAtual->getHoraTermino()>=$horaInicio)/*inicio durante o evento*/
-					||($eventoAtual->getHoraInicio()<=$horaTermino && $eventoAtual->getHoraTermino()>=$horaTermino)/*termino durante o evento*/
-					||($horaInicio<=$eventoAtual->getHoraInicio()&&$horaTermino>=$eventoAtual->getHoraTermino())/*se o inicio for antes e o termino depois de um evento*/){
+					if(($eventos[$i]->getHoraInicio()<=$horaInicio && $eventos[$i]->getHoraTermino()>=$horaInicio)/*inicio durante o evento*/
+					||($eventos[$i]->getHoraInicio()<=$horaTermino && $eventos[$i]->getHoraTermino()>=$horaTermino)/*termino durante o evento*/
+					||($horaInicio<=$eventos[$i]->getHoraInicio()&&$horaTermino>=$eventos[$i]->getHoraTermino())/*se o inicio for antes e o termino depois de um evento*/){
 						return false;//encontrou um compromisso na mesma hora
 					}
 				}
-				
 			}
 			return true;//usuario nao possui um compromisso na mesma hora
 		}
 
-		public function criarEvento($nomeEvento,$local,$data,$horaInicio,$horaTermino,$minimoParticipantes,$autoCancelamento,$criador,$observacoes,$amigosSelecionados){
+		public function criarEvento($nomeEvento,$local,$data,$horaInicio,$horaTermino,$minimoParticipantes,$autoCancelamento,$IDcriador,$observacoes,$amigosSelecionados,$URLImagem){
 			if (!verificarDisponibilidade($usuario,$data,$horaInicio,$horaTermino)){
 				throw new TestableException('Usuario Ja Possui Evento Cadastrado Nesta Hora');
 			}
-			$eventoCriado = new Evento($nomeEvento,$local,$data,$horaInicio,$horaTermino,$minimoParticipantes,$autoCancelamento,$criador,$observacoes,$amigosSelecionados);
+			$eventoCriado = new Evento($nomeEvento,$local,$data,$horaInicio,$horaTermino,$minimoParticipantes,$autoCancelamento,$IDcriador,$observacoes,$URLImagem);
 			$quantidadeConvites=sizeof($amigosSelecionados);
 			for($i=0;$i<$quantidadeConvites;$i++){
-				$conviteNovo = new Convite($amigosSelecionados[$i],$eventoCriado);
-				$eventoCriado->adcionarConvitePendente($conviteNovo);//adciona os convites na lista
+				$conviteNovo = new Convite($amigosSelecionados[$i]->getID(),$eventoCriado->getID());
+				$conviteDAO->inserirConvite($amigosSelecionados[$i]->getID(),$eventoCriado->getID());
+				$eventoCriado->adcionarConvidados($conviteNovo);//adciona os convites na lista
 			}
-			array_push($eventosCriados,$eventoCriado);
+			$eventoDAO->inserirEvento($nomeEvento, $local, $data, $horainicio, $horatermino, $minimoparticipantes, $autocancelamento, $URLImagem, $IDCriador, $observacoes);
+
 			/*TODO
 				enviar os convites pelo facebook
 			*/
 		}
-
-		public function alterarEvento($eventoCriado,$nomeEvento,$local,$data,$horaInicio,$horaTermino,$minimoParticipantes,$autoCancelamento,$observacoes,$amigosSelecionados){
-			$horaAntigaI=$eventoCriado->getHoraInicio();
-			$horaAntigaF=$eventoCriado->getHoraTermino();
+		private function buscarEvento($idEvento,$valor){
+			$eventos=listarEventos($valor);
+			$max = sizeof($eventos);
+			for($i=0 ; $i<$max ; $i++){
+				if($eventos[$i]->getID() == $idEvento){
+					return $eventos[$i];
+				}
+			}
+			return null;
+		}
+		public function alterarEvento($idEvento,$idUsuario,$nomeEvento,$local,$data,$horaInicio,$horaTermino,$minimoParticipantes,$autoCancelamento,$observacoes,$amigosSelecionados, $urlimagem){
+			$eventoCriado=buscarEvento($idEvento,0);
+			if($eventoCriado==null){
+				throw new TestableException('Evento não encontrado');
+			}
 			$eventoCriado->setHoraInicio(null);
 			$eventoCriado->setHoraTermino(null);
-			if (!verificarDisponibilidade($usuario,$data,$horaInicio,$horaTermino)){//caso o horario seja inconpativel ele não deverá ser alterado...
+			if (!verificarDisponibilidade($idUsuario,$data,$horaInicio,$horaTermino)){//caso o horario seja inconpativel ele não deverá ser alterado...
 				$eventoCriado->setHoraInicio($horaAntigaI);
 				$eventoCriado->setHoraTermino($horaAntigaF);
 				throw new TestableException('Usuario Ja Possui Evento Cadastrado Nesta Hora');
 			}
 			else{
-				$max=sizeof($eventosCriados){
-					for($i=0;$i<$max;$i++){
-						if($eventosCriados[$i]->getID==$eventoCriado->getID()){
-							$eventosCriados[$i]->setNomeEvento($nomeEvento);
-							$eventosCriados[$i]->setLocal($local);
-							$eventosCriados[$i]->setData($data);
-							$eventosCriados[$i]->setHoraInicio($horaInicio);
-							$eventosCriados[$i]->setHoraTermino($horaTermino);
-							$eventosCriados[$i]->setMinimoParticipantes($minimoParticipantes);
-							$eventosCriados[$i]->setAutoCancelamento($autoCancelamento);
-							$eventosCriados[$i]->setObservacoes($observacoes);
-							$eventosCriados[$i]->adcionarConvidados($amigosSelecionados);
-						}
-					}			
-				}
+				$eventoDAO->editarEvento ($idEvento, $nomeEvento, $local, $data, $horainicio, $horatermino, $minimoparticipantes, $autocancelamento, $urlimagem, $observacoes)
 			}
 			/*TODO
 				enviar as alterações pelo facebook
 			*/
 		}
 
-		public function cancelarEvento($evento) {
-			$chave=array_search($eventosCriados,$evento)
-			if($chave == null){
+		public function cancelarEvento($idEvento) {
+			$eventoCriado=buscarEvento($idEvento,0);
+			if($eventoCriado == null){
 				throw new DadoNaoEncontradoException("Evento nao foi encontrado");
 			}
-			array_splice($eventosCriados,$evento)
+			$eventoDao->deletarEvento($idEvento);
 			
 			/*TODO
 				enviar o cancelamento para o facebook
 			*/
 		}
 
-		public function visualizarEventos($valor,$usuario){
-			$eventos = array();
-			if($valor==0){//retorna criados
-				$eventos=buscarEventosCriadosPorUmUsuario($usuario);
+
+		public function confirmarParticipacao($IDEventoPendente,$IDusuario){
+			$eventoPendente=buscarEvento($IDEventoPendente,2);
+			if ($eventoPendente==null){
+				throw new DadoNaoEncontradoException('Evento não encontrado');
 			}
-			else if($valor==1){//retorna pendentes
-				$eventos=buscarEventosPendentesDeUmUsuario($usuario);
+			try{
+				$eventoPendente->confirmarPresenca($IDusuario);
+				$conviteDAO->editarConvite($conviteDao->buscarConvite($IDusuario)->getID,true);//evento alterado no banco de dados
+				return true; //o convite foi confirmado;
 			}
-			else if($valor==2){//retorna confirmados
-				$eventos=buscarEventosConfirmadosDeUmUsuario($usuario);
+			catch (DadoNaoEncontradoException e){
+				throw new DadoNaoEncontradoException('Usuario não encontrado');
 			}
-			return $eventos;
+			return false;
 		}
 
-		public function confirmarParticipacao($IDEventoPendente,$usuario){
-			$eventosPendentes=buscarEventosPendentesDeUmUsuario($usuario);
-			$tamP=sizeof($eventosPendentes);
-			for ($i=0; $i < $tamP; $i++) { //compara o evento que quero confirmar com os eventos do array de pendentes.
-				if($IDEventoPendente == $eventosPendentes[$i]->getID()) { //se o evento que quero confirmar for o mesmo do array de pendentes...
-					try{
-						$eventosPendentes[$i]->confirmarPresenca($usuario->getID());
-						array_push($eventosConfirmados,$eventosPendentes[$i]);
-						return true; //o convite foi confirmado;
-					}
-					catch (DadoNaoEncontradoException e){
-						throw new DadoNaoEncontradoException("Usuario não encontrado");
-					}
-					
+		public function cancelarParticipacao($IDEventoPendente,$IDusuario){
+			$eventoPendente=buscarEvento($IDEventoPendente,2);
+			if ($eventoPendente==null){
+				$eventoPendente=buscarEvento($IDEventoPendente,1);
+				if ($eventoPendente==null){
+					throw new DadoNaoEncontradoException('Evento não encontrado');
 				}
 			}
-			return false;//convite não foi confirmado
+			try{
+				$eventoPendente->cancelarPresenca($IDusuario);
+				$conviteDAO->editarConvite($conviteDao->buscarConvite($IDusuario)->getID,false);//evento alterado no banco de dados , agora como deletar se nao possuo IDCONVITE
+				return true; //o convite foi confirmado;
+			}
+			catch (DadoNaoEncontradoException e){
+				throw new DadoNaoEncontradoException('Usuario não encontrado');
+			}
+			return false;
 		}
+	
 
-		public function cancelarParticipacao($IDEventoPendente,$usuario){
-			$eventosPendentes=buscarEventosPendentesDeUmUsuario($usuario);
-			array_push($eventosPendentes,buscarEventosConfirmadosDeUmUsuario($usuario));
-			$tamP=sizeof($eventosPendentes);
-			for ($i=0; $i < $tamP; $i++) { //compara o evento que quero confirmar com os eventos do array de pendentes.
-				if($IDEventoPendente == $eventosPendentes[$i]->getID()) { //se o evento que quero confirmar for o mesmo do array de pendentes...
-					try{
-						$eventosPendentes[$i]->cancelarPresenca($usuario->getID());
-						return true; //o convite foi confirmado;
-					}
-					catch (DadoNaoEncontradoException e){
-						throw new DadoNaoEncontradoException("Usuario não encontrado");
-					}
-					
-				}
-			}
-			return false;//convite não foi confirmado
-		}
-	}
+}
 ?>
