@@ -7,7 +7,7 @@
 	public class ConviteDAO{ //Classe de Acesso a Dados referentes ao Convite.
 
 		//Cadastrar convite no Banco de Dados.
-		public function inserirConvite ($idEvento, $emailConvidado){
+		public function inserirConvite ($idEvento, $idConvidado){
 			$cadastro = mysql_query ("INSERT INTO convite (`idEvento`, `confirmacao`, `idConvidado`) VALUES ('$idEvento', '0', '$idConvidado')"); //Insere na tabela convite, o id do evento, o estado de confirmação e o id da pessoa convidada.
 			if(!$cadastro){ //Caso o cadastro do convite não seja efetuado por algum motivo, a função retorna "false".
 				return false;
