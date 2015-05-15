@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>C'mon</title>
+    <meta charset="utf-8">
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/scripts.js"></script>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+	  <link href="css/style.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	  <script language="javascript" src="js/facebook.js"></script>
+  </head>
+    <!-- Logo facebook e twitter -->
+    <body>
+      <div class="container">
+        <header class="row">
+          <div class="navbar navbar-fixed-top navbar-inverse">
+            <div class="navbar-inner">
+              <a href="https://www.facebook.com/" target="parent" style="margin-left: 5px"> <img alt = "Página no Facebook" width = "45" height = "45" src="img/btnFacebook.png"> </a>
+              <a href="https://www.twitter.com/" target="parent" style="margin-left: 5px;"> <img alt = "Página no Twitter" width = "45" height = "45" src="img/btnTwitter.jpg"> </a>
+            </div>
+          </div>
+        </header>
+
+        <!-- Informações do usuário -->
+        <div class="row">
+          <div role="main1" class="col-md-6 column">
+            <div class="featurette">
+              <img class="featurette-image img-rounded pull-left" src="http://2.bp.blogspot.com/-pcmViI0Z-Jg/UVyv5EAevPI/AAAAAAAAAHg/TyuD3wA8jhE/s1600/488301_629454693748360_963968088_n.png">
+              <h3 class="featurette-heading" >Responsive Design.</h3>
+              <p>In simple terms</p>
+              <p>In simple terms</p>
+              <p>In simple terms</p>
+            </div>
+          </div>
+ 
+          <div role="complementary1" class="col-md-6 column">
+            <div class="featurette">
+              <img class="featurette-image pull-right" src="img/logoCmon.png">
+            </div>
+          </div>
+        </div>
+        
+        <div class="row">
+          <hr class="featurette-divider">
+          <div role="main2" class="col-md-6 column">
+            <button type="button" class="btn btn-primary btn-lg" aria-label="right Align">
+              <span class="glyphicon glyphicon-plus" aria-hidden="true">  Criar evento</span>
+            </button>
+          </div>
+ 
+          <div role="complementary2" class="col-md-6 column">
+            <button type="button" class="btn btn-primary btn-lg" aria-label="right Align">
+              <span class="glyphicon glyphicon-calendar" aria-hidden="true">  Agenda</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Formulário para criar evento -->
+        <div role="complementary3" class="col-md-12 column">
+              
+            <div id="borda2" class >
+            
+              <div id= "dados" class>
+                
+
+                </div>
+      			<br/>          
+              <table width="750" border="0" align="center">
+                 <tr>
+                   <td><h4 align="center">Dados do Evento</h4></td>
+                   <td><h4 align="center">Envio de Convites</h4></td>
+                 </tr>
+              </table>
+
+
+
+
+<div id="rect" class >
+<div style="width:100px; height:80px; float:right; margin-right:30px; margin-top:20px;" id="img_evento">
+<img src="img/1374304_606691342727045_1363722961_n.jpg" width="100px" height="80px"/>
+</div>
+<div style="width:100px; height:35px; float:right;margin-top:110px; margin-right:-100px;" id="selecionar_img">
+<input type="file"></input>
+</div>
+
+<table width="250" border="0" >
+  <tr>
+    <td>
+    Nome do Evento:
+    <input type="text" id="nome_evento" name="nome_evento" class="input_txt"></input></td>
+  </tr>
+  <tr>
+    <td>
+    Local:<br/>
+    <input type="text" id="local" name="local" class="input_txt"></input>
+    </td>
+  </tr>
+  <tr>
+    <td><input type="checkbox" name="auto_cancel" id="auto_cancel"></input> Cancelamento automático </td>
+  </tr>
+  <tr>
+   
+    <td>Minímo de participantes: <input type="number" name="minimo_P" id="minimo_P" class="number"></input></td>
+  </tr>
+  <tr> 
+    <td>
+  </tr>
+  <table width="400" >
+  <tr>
+    <td>Observações: <textarea class="form-control" rows="3"></textarea></td></td>
+  </tr>
+</table>
+
+  <br />
+  <table width="400">
+  <tr>
+    <td>Data:
+    <input type="date" id="data" name="data"></input>
+    </td>
+    <td>Início:
+    <input type="time" name="i_hora" id="i_hora"></td>
+    <td>Término:
+    <input type="time" name"f_hora" id="f_hora">
+    </td>
+  </tr>
+</table>
+</table>
+
+
+
+	  
+</div>
+
+
+
+
+
+
+            <div id="rect2" class >
+              <center>
+  <table class="table table-striped" width="400">
+  <tr>
+    <td colspan="2"><input type="button" name="selecionar_todos" id="selecionar_todos" value="Selecionar Todos" class="btn btn-sm btn-primary" ></input></td>
+    <td><input type="button" name="desmarcar_todos" id="desmarcar_todos" value="Desmarcar Todos" class="btn btn-sm btn-info" ></input></td>
+  </tr>
+  <tr>
+    <td colspan="2"><input style="border-radius:5px;" type="text" name="selecionar_amigos" id="selecionar_amigos" placeholder="Selecionar amigos"></input> </td>
+    <td><input type="button" name="buscar" id="buscar" value="Procurar" class="btn btn-sm btn-primary"></input></td>
+  </tr>
+  <tr>
+    <td><input type="checkbox"></input></td>
+    <td>
+    
+	<div id="img_lista">
+    <img src="img/1374304_606691342727045_1363722961_n.jpg" width="59" height="50" />
+    </div><!--img-->
+    </td>
+    <td>
+    <h5><strong>Nome Sobrenome</strong></h5>
+    <h6>Cidade, Estado País</h6>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"></td>
+    <td><strong>2 selecionados</strong></td>
+  </tr>
+</table>
+</center>
+                
+              </div><!--rect2-->
+              <center>
+                <td><input type="submit" id="criar_evento" name="criar_evento" value="Criar Evento" class="btn btn-sm btn-primary"></input></td>
+              </center>
+            </div>
+          </div>
+        
+
+        <!-- Rodapé -->
+        <div class="navbar navbar-fixed-bottom navbar-inverse">
+          <div class="navbar-inner" align="center">
+            <font color="#CCCCCC"> Copyright © 2015 C'MON. Developed by MacGyver Web Solutions Ltda. </font>
+            <img src="img/logoMacgyver.png" width = "40" height = "40">
+          </div>
+        </div>
+      </div>
+
+    </body>
+</html>

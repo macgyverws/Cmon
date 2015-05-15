@@ -1,0 +1,91 @@
+.container, .container-fluid {
+	background-color: #fff;
+}
+
+.row {
+}
+
+[class*="col-"], header, footer, div[role="main"] {
+	background-color: #ffffff;
+	text-align: left;
+}
+
+div[role="complementary1"], div[role="complementary2"], div[role="complementary3"] {
+	background-color: #ffffff;
+}
+
+div[role="main1"], div[role="complementary1"] {
+	height: 150px;
+	margin-top: 40px;
+}
+
+div[role="main2"], div[role="complementary2"] {
+	height: 50px;
+	text-align: center;
+}
+
+div[role="main3"], div[role="complementary3"] {
+	height: 700px;
+}
+
+#borda{
+	border: 1px solid #000;
+	background-color: #fff;
+	width: 900px;
+	height: 560px; 
+	margin-top: 10px;
+}
+#info{
+		border-right: 1px solid #000;
+	background-color: #fff;
+	width: 450px;
+	height: 400px; 
+	margin: 20px;
+	margin-top: 20px;
+	float:left;	
+
+}
+#rect2 {
+	
+	background-color: #fff;
+	width: 380px;
+	height: 420px; 
+	margin: 20px;
+	margin-top: 20px;
+	float:right;
+		
+}
+#borda2 {
+	border: 1px solid #000;
+	background-color: #fff;
+	width: 900px;
+	height: 550px; 
+	margin: 0 auto;
+	margin-top: 30px;
+}
+
+.featurette-image.pull-left {
+  	margin-right: 20px;
+	width: 120px;
+	height: 150px;
+}
+
+.featurette-image.pull-right {
+	margin-right: 15px;
+	height: 180px;
+	width: 265px;
+}
+
+.btn.btn-default{
+	margin-top: 10px;
+}
+#img_lista{
+	width:70px;
+	height:56px;
+	}
+#rect .input_txt{
+	width:250px;	
+}
+#rect .number{
+	width:35px;	
+}
