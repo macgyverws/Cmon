@@ -26,14 +26,14 @@
 			$eventosPendentesTemp()=array();
 			$eventosCriadosTemp()=array();
 			for($i = 0; $i < $quantidadeDeEventos; $i++){
-    				if($eventosDoUsuario[$i]->getConfirmado()==true){//se o usuario estiver confirmado no evento
+    			if($eventosDoUsuario[$i]->getConfirmado()==true){//se o usuario estiver confirmado no evento
 					array_push($eventosConfirmadosTemp,$eventosDoUsuario[$i])
 					if($eventosDoUsuario[$i]->getCriador()->getID()==$IDUsuario){//se o usuário for o dono do evento
 						array_push($eventosCriadosTemp,$eventosDoUsuario[$i]);
 					}
 				}
 				else{//se não estiver confirmado
-					array_push($eventosPendentesTemp,$eventosDoUsuario[$i])
+					array_push($eventosPendentesTempo,$eventosDoUsuario[$i])
 				}
 			}
 			$eventosCriados=$eventosCriadosTemp();//sobrescreve a lista de eventos criados
@@ -66,7 +66,8 @@
 		}
 
 		private function verificarDisponibilidade($IDUsuario,$data,$horaInicio,$horaTermino){
-			$eventos=listarEventos(1);//cria uma lista de eventos criados
+			carregarConvites($IDUsuario);
+			$eventos=buscarEvento(1);//cria uma lista de eventos criados
 			$quantidadeDeEventos = sizeof($eventos);//verifica o tamanho da lista dos eventos criados
 			for($i = 0; $i < $quantidadeDeEventos; $i++){
 				if($eventoAtual->getData()==$data){
@@ -84,19 +85,15 @@
 			if (!verificarDisponibilidade($usuario,$data,$horaInicio,$horaTermino)){
 				throw new TestableException('Usuario Ja Possui Evento Cadastrado Nesta Hora');
 			}
-			//AQUI TEM QUE INSERIR O EVENTO NO BD PARA QUE GERE O ID
-			$eventoDAO->inserirEvento($nomeEvento, $local, $data, $horainicio, $horatermino, $minimoparticipantes, $autocancelamento, $URLImagem, $IDCriador, $observacoes);
-
-			//DEPOIS BUSCA O EVENTO NO BD PARA SABER O ID
-			
-			//Recebe o id por parametro também
-			$eventoCriado = new Evento($id ,$nomeEvento,$local,$data,$horaInicio,$horaTermino,$minimoParticipantes,$autoCancelamento,$IDcriador,$observacoes,$URLImagem);
+			$eventoCriado = new Evento($nomeEvento,$local,$data,$horaInicio,$horaTermino,$minimoParticipantes,$autoCancelamento,$IDcriador,$observacoes,$URLImagem);
 			$quantidadeConvites=sizeof($amigosSelecionados);
 			for($i=0;$i<$quantidadeConvites;$i++){
 				$conviteNovo = new Convite($amigosSelecionados[$i]->getID(),$eventoCriado->getID());
 				$conviteDAO->inserirConvite($amigosSelecionados[$i]->getID(),$eventoCriado->getID());
 				$eventoCriado->adcionarConvidados($conviteNovo);//adciona os convites na lista
 			}
+			$eventoDAO->inserirEvento($nomeEvento, $local, $data, $horainicio, $horatermino, $minimoparticipantes, $autocancelamento, $URLImagem, $IDCriador, $observacoes);
+
 			/*TODO
 				enviar os convites pelo facebook
 			*/
