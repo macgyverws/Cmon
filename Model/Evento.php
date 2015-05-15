@@ -66,7 +66,7 @@ require_once "Convite.php";
         $this->URLImagem = $URLImagem;
       }
 
-	  public function getid( ) {
+	  public function getID( ) {
 	    return $this->$id; 
 	  } 
 	  public function getURL( ) {
@@ -129,9 +129,9 @@ require_once "Convite.php";
        public function confirmarPresenca($idConvidado) {
       	$max=sizeof($convitesPendentes);
            for($i=0;$i<$max;$i++){
-              if($convitesPendentes[$i].getIDConvidado()==$idConvidado){
-              		$convitesPendentes[$i].confirmarParticipacao();
-              		$convite=convitesPendentes[$i];
+              if($convitesPendentes[$i]->getIDConvidado()==$idConvidado){
+              		$convitesPendentes[$i]->confirmarParticipacao();
+              		$convite=$convitesPendentes[$i];
               		array_splice($convitesPendentes, $convite);//deleta convite
             		array_push($convitesConfirmados, $convite);//insereconvite
         			return; 
@@ -147,8 +147,8 @@ require_once "Convite.php";
     	if(!$confirmado){
  			$max=sizeof($convitesPendentes);
 			for($i=0;$i<$max;$i++){
-   				 if($convitesPendentes[$i].getIDConvidado()==$idConvidado){
-    				$convitesPendentes[$i].cancelarParticipacao();
+   				 if($convitesPendentes[$i]->getIDConvidado()==$idConvidado){
+    				$convitesPendentes[$i]->cancelarParticipacao();
     				$convite=$convitesPendentes[$i];
     				array_splice($convitesPendentes, $convite);
     				return ;
@@ -159,8 +159,8 @@ require_once "Convite.php";
   		else{
     	   $max=sizeof($convitesConfirmados);
            for($i=0;$i<$max;$i++){
-              if($convitesConfirmados[$i].getIDConvidado()==$idConvidado){
-      			 $convitesConfirmados[$i].cancelarParticipacao();
+              if($convitesConfirmados[$i]->getIDConvidado()==$idConvidado){
+      			 $convitesConfirmados[$i]->cancelarParticipacao();
      			 $convite=$convitesConfirmados[$i];
      			 array_splice($convitesConfirmados, $convite);
       			 return ;
@@ -187,7 +187,7 @@ require_once "Convite.php";
        else{
      		$listaConvidados=array();
         	for($i=0;$i<$max;$i++){
-            	array_push($listaConvidados,$convites[$i].getIDConvidado());
+            	array_push($listaConvidados,$convites[$i]->getIDConvidado());
          	}         
        		return $listaConvidados;
       }
