@@ -6,6 +6,7 @@
      */
 
     public class Convite{ 
+     private $id;
      private $IDconvidado;
      private $IDevento;
      private $confirmado =  false;
@@ -30,6 +31,10 @@
      public function cancelarParticipacao(){
         $confirmado = false;
      }
+  
+    public function getID(){
+      return $this->$id;
+    }
 
     public function getConfirmado(){
       return $this->$confirmado;
