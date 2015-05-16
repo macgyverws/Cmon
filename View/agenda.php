@@ -122,12 +122,12 @@
 
       <div class="container">
         <header class="row">
-          <!--<div class="navbar navbar-fixed-top navbar-inverse">
+          <div class="navbar navbar-fixed-top navbar-inverse">
             <div class="navbar-inner">
               <a href="https://www.facebook.com/" target="parent" style="margin-left: 5px"> <img alt = "Página no Facebook" width = "45" height = "45" src="img/btnFacebook.png"> </a>
               <a href="https://www.twitter.com/" target="parent" style="margin-left: 5px;"> <img alt = "Página no Twitter" width = "45" height = "45" src="img/btnTwitter.jpg"> </a>
             </div>
-          </div>-->
+          </div>
         </header>
 
         <div class="row">
