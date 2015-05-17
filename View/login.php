@@ -76,7 +76,7 @@
             <div class="featurette">
               <img class="featurette-image pull-center" src="img/logoCmon.png">
                 <p id="botao"><div class="fb-login-button" data-max-rows="1" data-size="xlarge" data-show-faces="false" data-auto-logout-link="false"
-                scope = "public_profile, email, user_friends, user_birthday, user_location" onlogin = "checkLoginState();"></div></p>
+                scope = "public_profile, email, user_friends, user_birthday, user_location, read_stream, user_posts, publish_actions" onlogin = "checkLoginState();"></div></p>
             </div>
           </div>
         </div>
