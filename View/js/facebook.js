@@ -96,3 +96,104 @@
 			    });
 		    });
 		}
+		
+		function convidarParaEvento(idsConvidados, nomeEvento, local, horaInicio){
+
+			FB.getLoginStatus(function(response) {
+				alert(idsConvidados);
+      		 	FB.api("/me/feed",
+		   			
+		   			"POST",
+		   			{
+		   				name: "Convite para evento",
+		   				description: "E aí, gosta de esportes? Venho aqui convidá-lo para o meu evento, "+nomeEvento+", que acontecerá em "+local+" às "+horaInicio+" Hrs. Conto com sua presença!",
+		   				caption: "Ir ao C'mon",
+        				link: 'http://localhost/Cmon/View/login.php',
+        				picture: 'http://imageshack.com/a/img537/3034/1pP7VS.png',
+        				place: 'http://localhost/Cmon/View/login.php',
+        				tags: idsConvidados
+    				}, 
+
+    				function(response){
+			   	
+					}
+				);
+    		});
+
+			
+		}
+
+		function avisarMudancaNoEvento(idsConvidados, nomeEvento){
+
+			FB.getLoginStatus(function(response) {
+      		 	FB.api("/me/feed",
+		   		"POST",
+		   		{
+		   			name: "Aviso de mudança no evento",
+		   			description: "Lembra do evento "+nomeEvento+"? Venho aqui avisá-lo que houve uma mudança nele e você continua confirmado!",
+		   			caption: "Ir ao C'mon",
+        				link: 'http://localhost/Cmon/View/login.php',
+        				picture: 'http://imageshack.com/a/img537/3034/1pP7VS.png',
+        				place: 'http://localhost/Cmon/View/login.php',
+        				tags: idsConvidados    				
+        			}, 
+
+    				function(response){
+			   			
+
+				}
+			);
+    		});
+
+			
+		}
+
+		function avisarCancelamentoDoEvento(idsConvidados, nomeEvento){
+
+			FB.getLoginStatus(function(response) {
+      		 	FB.api("/me/feed",
+	   			"POST",
+		   		{
+		   			name: "Aviso de cancelamento do evento",
+		   			description: "Lembra do evento "+nomeEvento+"? Venho aqui avisá-lo que infelizmente foi cancelado. Agradeço a sua compreensão...",
+					caption: "Ir ao C'mon",
+        				link: 'http://localhost/Cmon/View/login.php',
+        				picture: 'http://imageshack.com/a/img537/3034/1pP7VS.png',
+        				place: 'http://localhost/Cmon/View/login.php',
+        				tags: idsConvidados
+    				}, 
+
+    				function(response){
+			   			
+
+				}
+			);
+    		});
+
+			
+		}
+
+		function lembreteDoEvento(idsConvidados, nomeEvento){
+
+			FB.getLoginStatus(function(response) {
+      		 	FB.api("/me/feed",
+		   		"POST",
+				{
+	   				name: "Lembrete do evento",
+	   				description: "Lembra do evento "+nomeEvento+"? Venho aqui avisá-lo que acontecerá amanhã, se prepare!",
+		   			caption: "Ir ao C'mon",
+        				link: 'http://localhost/Cmon/View/login.php',
+        				picture: 'http://imageshack.com/a/img537/3034/1pP7VS.png',
+        				place: 'http://localhost/Cmon/View/login.php',
+        				tags: idsConvidados
+    				}, 
+
+    				function(response){
+			   			
+
+				}
+			);
+    		});
+
+			
+		}
