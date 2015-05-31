@@ -86,39 +86,17 @@
 
 
 
+      
       <?php
-          
-          // Pega a quantidade de amigos do usuário, enviado via query string.
-           $qtdAmigos = $_GET['size'];
 
-          // Pega os dados do usuário enviado pelo Cookie no momento do login via facebook.
-           $stringDados = $_COOKIE['nome']; 
+        // Carrega os dados do login
+        include('../Controller/controller.php');  
 
-           $controla = 0;
+        $controller = new Controller();
+        $controller->carregarDadosDoLogin($_COOKIE['nome'], $_GET['size']);
 
-           // Array que armazena os dados do usuário de forma organizada.
-           $dados = [];
-           $auxiliar = "";
-
-           // Guarda os dados do usuário em diferentes posições do vetor 
-           for($i = 0; $i < strlen($stringDados); $i++){
-              
-              if($stringDados[$i] == ','){
-                $dados[$controla] = $auxiliar;
-                $auxiliar = "";
-                $controla++;
-                $i++;
-              }
-
-              $auxiliar = $auxiliar.$stringDados[$i];
-
-
-          }
-
-          // Armazena o ultimo amigo no vetor.
-          $dados[$controla] = $auxiliar;
-        
       ?>
+
 
       <div class="container">
         <header class="row">
@@ -134,11 +112,29 @@
           <div role="main1" class="col-md-6 column">
             <div class="featurette">
 
-            <a href="<?php echo "$dados[4]?height=500"; ?>"><img class="featurette-image img-rounded pull-left" src="<?php echo "$dados[4]?height=250"; ?>"></a>
-              <h3 class="featurette-heading" ><?php echo "$dados[1]"; ?></h3>
-              <p><?php echo "Cidade: $dados[2]"; ?></p>
-              <p><?php echo "Idade: $dados[3] anos"; ?></p>
-              <p>Esporte favorito: </p>
+               <?php
+
+                //Pega os dados do usuário que está armazenado no controller.
+                $dadosUsuario = [];
+                $dadosUsuario[0] = $controller->getUsuario()->getUrlFoto();
+                $dadosUsuario[1] = $controller->getUsuario()->getNome();
+                $dadosUsuario[2] = $controller->getUsuario()->getCidade();
+                $dadosUsuario[3] = $controller->getUsuario()->getIdade();
+                $dadosUsuario[4] = $controller->getUsuario()->getEsporteFavorito();
+
+                //Mostra os dados
+                echo ("
+
+                        <a href='$dadosUsuario[0]?height=500'><img class='featurette-image img-rounded pull-left' src='$dadosUsuario[0]?height=500'></a>
+                        <h3 class='featurette-heading' >$dadosUsuario[1]</h3>
+                        <p>Cidade: $dadosUsuario[2]</p>
+                        <p>Idade: $dadosUsuario[3]</p>
+                        <p>Esporte favorito: $dadosUsuario[4]</p>
+
+              ");
+
+              ?>
+              
             </div>
           </div>
  
@@ -151,25 +147,14 @@
         
         <div class="row">
           <hr class="featurette-divider">
-          <div role="main2" class="col-md-4 column">
-            <button type="button" class="btn btn-primary btn-lg" aria-label="right Align">
+          <div role="main2" class="col-md-6 column">
+            <button type="button" class="btn btn-primary btn-lg" aria-label="right Align" onclick="location.href = 'criarevento.php?size=<?php echo($_GET['size']);?>';">
               <span class="glyphicon glyphicon-plus" aria-hidden="true">  Criar evento</span>
             </button>
           </div>
  
-          <div role="complementary2" class="col-md-4 column">
-             <?php if(isset($authUrl)) //user is not logged in, show login button
-              {
-                echo '<a class="login" href="'.$authUrl.'"><img src="images/google-login-button.png" /></a>';
-              } 
-              else // user logged in 
-              {
-                echo '<br /><a class="logout" href="?reset=1">Logout</a>';
-              }?>
-          </div>
-
-          <div role="complementary2" class="col-md-4 column">
-            <button type="button" class="btn btn-primary btn-lg" aria-label="right Align">
+          <div role="complementary2" class="col-md-6 column">
+            <button type="button" class="btn btn-primary btn-lg" aria-label="right Align" onclick="location.href = 'agenda.php?size=<?php echo($_GET['size']);?>';">
               <span class="glyphicon glyphicon-calendar" aria-hidden="true">  Agenda</span>
             </button>
           </div>
