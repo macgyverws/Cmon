@@ -3,7 +3,7 @@
    /**
    * A classe usuário apresenta os atributos e métodos responsáveis pela manipulação do usuário.
    */
-  public class Usuario{ 
+  class Usuario{ 
     private $nome;
     private $ID; 
     private $urlFoto;
@@ -16,12 +16,14 @@
   */
   
    public function __construct($nome, $urlFoto, $cidade, $idade, $esporteFavorito, $ID){
+
       $this->nome = $nome;
       $this->urlFoto = $urlFoto;
       $this->cidade = $cidade;
       $this->idade = $idade;
       $this->esporteFavorito = $esporteFavorito;
       $this->ID= $ID; 
+
     }
   
     public function setEsporteFavorito($esporteFavorito){
