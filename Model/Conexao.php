@@ -1,7 +1,7 @@
 <?php 
-
+error_reporting(E_ALL ^ E_DEPRECATED);
 // Classe de conexão com o banco de dados e acesso as tabelas do cmon.
-public class Conexao{
+class Conexao{
   
   // O servidor onde o sistema funciona.
   private $servidor;
@@ -32,7 +32,7 @@ public class Conexao{
     
     $db = mysql_select_db($banco,$link);
     
-    if (!$db_selected) {
+    if (!$db) {
       die ('Can\'t use foo : ' . mysql_error());
     }
   }
