@@ -2,7 +2,7 @@
 .container, .container-fluid {
 	padding-right: 0px;
 	padding-left: 0px;
-	background-color: #B7E4F9;
+	background-color: #FFFFFF;
 }
 
 .row {
@@ -25,7 +25,7 @@ div[role="complementary"] {
 }
 
 div[role="main"]{
-	background-color: #B7E4F9;
+	background-color: #FFFFFF;
 	text-align: center;
 }
 
